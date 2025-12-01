@@ -79,15 +79,14 @@ pip install -r requirements.txt
 
 
 4. Configure Environment Variables
-Create a .env file in the project root:
 
-bash
-Copy code
+create .env file by entering the following commands in your terminal:
+note: this may not work if the enviroment is activated then you will need to manually add them to the folder.
+
 touch .env
 Add the following:
 
-env
-Copy code
+Contents the .env Copy code:
 GOOGLE_API_KEY=your-google-adk-api-key
 GOOGLE_PROJECT_ID=your-gcp-project-id
 GOOGLE_LOCATION=us-central1

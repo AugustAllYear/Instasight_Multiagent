@@ -2,6 +2,8 @@
 
 A start to finish data science multi-agent that delivers Instagram user insights extending beyond Meta Business, customizable to user-defined KPIs.
 
+IMIA is a modular multi-agent system that ingests Instagram data via API or CSV, applies LLM-powered analytics and forecasting, and outputs BI-ready datasets for PowerBI, Tableau, or interactive dashboards.
+
 IMIA Instasight (Multi Intelegence Agent) is a **multi-agent system** built with **Google Agent Developer Kit (ADK)** and Python. It ingests Instagram data, normalizes it, performs advanced analytics, and produces BI-ready exports suitable for **PowerBI** or **Tableau**. The platform supports both **manual CSV ingestion** and automated **Meta API ingestion**.
 
 IMIA leverages a **modular architecture** with LLM-powered agents for analytics, normalization, and prediction, along with parallel and sequential execution for maximum efficiency.  
@@ -58,6 +60,25 @@ imia-system/
 ├── requirements.txt
 ├── README.md
 └── .env
+
+### 🛠 Technologies & Roles
+
+| Technology / Tool                  | Role in IMIA                                                                 |
+|-----------------------------------|-----------------------------------------------------------------------------|
+| **Python**                         | Core language for agents, tools, and orchestration                          |
+| **LLM / OpenAI API**               | Generates insights, trend analysis, and forecasting                        |
+| **Google ADK / Vertex AI**         | Orchestrates multi-agent workflows, supports long-running tasks, deployment|
+| **Streamlit**                      | Interactive web UI for data upload, visualization, and exploration         |
+| **Meta Graph API**                 | Optional ingestion of Instagram Business metrics                           |
+| **Pandas / NumPy**                 | Data processing, normalization, and numeric computations                   |
+| **PowerBI & Tableau**              | Targets for BI-ready exports (.csv, .hyper)                                 |
+| **venv & .env**                     | Python environment management and secure configuration                     |
+| **Custom Python Modules / Tools**  | CSV normalization, analytics, forecasting, API connectors, BI export       |
+| **Sequential & Parallel Agents**   | Efficient execution of dependent or concurrent tasks                        |
+| **Looping Agents**                 | Recurring tasks and batch processing                                        |
+| **Sessions & Memory**              | Maintains state and historical metrics for intelligent decision-making     |
+| **Context Engineering**            | Optimizes LLM context for meaningful insights on metrics                   |
+
 
 ---
 

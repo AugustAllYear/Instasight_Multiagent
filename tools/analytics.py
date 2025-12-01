@@ -1,33 +1,21 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "ff906cae-92cf-449c-8920-176d2bc09b47",
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.13.2"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+import pandas as pd
+
+def engagement_analysis(data):
+    data["eng_rate"] = (data["likes"] + data["comments"] + data["saves"]) / data["reach"].replace(0, 1)
+    return {
+        "average_engagement_rate": data["eng_rate"].mean(),
+        "top_posts": data.nlargest(5, "eng_rate").to_dict(orient="records")
+    }
+
+def posting_patterns(data):
+    data["hour"] = data["post_timestamp"].dt.hour
+    data["weekday"] = data["post_timestamp"].dt.day_name()
+    return {
+        "best_hour": int(data.groupby("hour")["eng_rate"].mean().idxmax()),
+        "best_weekday": data.groupby("weekday")["eng_rate"].mean().idxmax()
+    }
+
+def content_clustering(data):
+    return {
+        "type_summary": data.groupby("content_type")["eng_rate"].mean().to_dict()
+    }

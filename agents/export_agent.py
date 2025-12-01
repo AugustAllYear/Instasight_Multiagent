@@ -3,6 +3,9 @@ from tools.exporters import create_powerbi_csv, create_tableau_extract
 
 export_agent = Agent(
     name="bi_export_agent",
-    instructions="Create BI-ready datasets from the IMIA analysis output.",
-    tools=[create_powerbi_csv, create_tableau_extract],
+    instructions=open("configs/agent_instructions/exporter.md").read(),
+    tools=[generate_powerbi_csv, generate_tableau_extract]
 )
+
+def run_export(analysis_output):
+    return export_agent.run({"analysis": analysis_output})

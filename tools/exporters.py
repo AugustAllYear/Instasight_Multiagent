@@ -1,33 +1,10 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "a38051fa-f172-4027-8153-3b24ff958ed6",
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.13.2"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+import pandas as pd
+
+def generate_powerbi_csv(analysis):
+    df = pd.DataFrame(analysis["top_posts"])
+    df.to_csv("exports/imia_bi_export.csv", index=False)
+    return "exports/imia_bi_export.csv"
+
+def generate_tableau_extract(analysis):
+    # Placeholder for Tableau .hyper file
+    return "exports/tableau_extract.hyper"

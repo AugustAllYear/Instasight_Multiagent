@@ -1,33 +1,15 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "f1f6a299-2c0b-4fbb-a666-389e35782d10",
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.13.2"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+import requests
+import pandas as pd
+import os
+
+def load_from_meta_api(page_id=None):
+    token = os.environ.get("META_TOKEN")
+
+    url = f"https://graph.facebook.com/v19.0/{page_id}/media"
+    params = {
+        "fields": "timestamp,like_count,comments_count,media_type,impressions,reach,saved",
+        "access_token": token
+    }
+    r = requests.get(url, params=params).json()
+    data = r.get("data", [])
+    return pd.DataFrame(data)

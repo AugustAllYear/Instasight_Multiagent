@@ -1,33 +1,11 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "6c47e4a0-8c11-4176-a6cb-e0cb2c1abfbc",
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.13.2"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+from agents.ingestion_agent import run_ingestion
+from agents.normalization_agent import run_normalization
+from agents.imia_agent import run_imia
+from agents.export_agent import run_export
+
+def run_full_pipeline(file):
+    step1 = run_ingestion(file)
+    step2 = run_normalization(step1)
+    step3 = run_imia(step2)
+    step4 = run_export(step3)
+    return step3, step4

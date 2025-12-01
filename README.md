@@ -1,2 +1,2 @@
 # Instasight_Multiagent
-Data science multi agent which provides IG user insights beyond meta business and tailorable to user defined KPIs.
+A start to finish data science multi-agent that delivers Instagram user insights extending beyond Meta Business, customizable to user-defined KPIs.

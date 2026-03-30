@@ -1,6 +1,9 @@
 import pandas as pd
 
 def engagement_analysis(data):
+    """Compute engagement rates and top posts."""
+    data = data.copy()
+    # Avoid division by zero
     data["eng_rate"] = (data["likes"] + data["comments"] + data["saves"]) / data["reach"].replace(0, 1)
     return {
         "average_engagement_rate": data["eng_rate"].mean(),
@@ -8,6 +11,12 @@ def engagement_analysis(data):
     }
 
 def posting_patterns(data):
+    """Analyze best posting times and days."""
+    data = data.copy()
+    # Ensure we have an engagement rate column
+    if "eng_rate" not in data:
+        data["eng_rate"] = (data["likes"] + data["comments"] + data["saves"]) / data["reach"].replace(0, 1)
+
     data["hour"] = data["post_timestamp"].dt.hour
     data["weekday"] = data["post_timestamp"].dt.day_name()
     return {
@@ -16,6 +25,10 @@ def posting_patterns(data):
     }
 
 def content_clustering(data):
+    """Summarise engagement by content type."""
+    data = data.copy()
+    if "eng_rate" not in data:
+        data["eng_rate"] = (data["likes"] + data["comments"] + data["saves"]) / data["reach"].replace(0, 1)
     return {
         "type_summary": data.groupby("content_type")["eng_rate"].mean().to_dict()
     }

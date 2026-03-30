@@ -1,22 +1,30 @@
-# Instasight: Multi Intelligence Agent
+# Instasight: Multi-Intelligence Agent for Instagram Insights
 
-A start to finish data science multi-agent that delivers Instagram user insights extending beyond Meta Business, customizable to user-defined KPIs.
-
-IMIA is a modular multi-agent system that ingests Instagram data via API or CSV, applies LLM-powered analytics and forecasting, and outputs BI-ready datasets for PowerBI, Tableau, or interactive dashboards.
-
-IMIA Instasight (Multi Intelegence Agent) is a **multi-agent system** built with **Google Agent Developer Kit (ADK)** and Python. It ingests Instagram data, normalizes it, performs advanced analytics, and produces BI-ready exports suitable for **PowerBI** or **Tableau**. The platform supports both **manual CSV ingestion** and automated **Meta API ingestion**.
-
-IMIA leverages a **modular architecture** with LLM-powered agents for analytics, normalization, and prediction, along with parallel and sequential execution for maximum efficiency.  
+A multi‑agent system that ingests Instagram data (via CSV or Meta API), normalizes it, applies LLM‑powered analytics and forecasting, and outputs BI‑ready datasets for PowerBI and Tableau.
 
 ---
 
 ## Features
+- Multi‑agent architecture (ingestion, normalization, analysis, export)
+- Data normalization of Meta Business Suite exports into a standard schema
+- LLM‑powered insights (engagement analysis, posting patterns, content clustering, forecasting)
+- BI exports – CSV for PowerBI and Tableau Hyper extract (placeholder)
+- Two ingestion modes – CSV upload (offline) or Meta API (automatic)
+- Streamlit UI for easy interaction
 
-- **Multi-Agent Architecture**: Ingestion, normalization, analysis, and BI export agents.
-- **Data Normalization**: Converts raw Meta Business Suite exports into a structured schema with datetime-aware metrics.
-- **Insights & Forecasting**: LLM-powered engagement insights, trend analysis, and predictive modeling.
-- **BI Export**: Generates PowerBI (.csv/.xlsx) and Tableau (.hyper) ready datasets.
-- **Flexible Deployment**: Run locally via Streamlit or deploy in Google Cloud using Vertex AI and ADK.
+---
+
+## Tech Stack
+
+| Component            | Technology                     |
+|----------------------|--------------------------------|
+| Core language        | Python                         |
+| Multi‑agent framework| Google Agent Development Kit   |
+| LLM integration      | Google Gemini (via ADK)        |
+| Data processing      | pandas, numpy                  |
+| UI                   | Streamlit                      |
+| API ingestion        | Meta Graph API, requests       |
+| BI exports           | CSV, Tableau Hyper (planned)   |
 
 ---
 
@@ -60,8 +68,9 @@ imia-system/
 ├── requirements.txt
 ├── README.md
 └── .env
+```
 
-### 🛠 Technologies & Roles
+### Technologies & Roles
 
 | Technology / Tool                  | Role in IMIA                                                                 |
 |-----------------------------------|-----------------------------------------------------------------------------|
@@ -80,124 +89,179 @@ imia-system/
 | **Context Engineering**            | Optimizes LLM context for meaningful insights on metrics                   |
 
 
+
 ---
 
-## Project Structure
+## Setup & Installation
 
-1. Clone the Repository: please see github user guides for information on how to clone the repo and launch it locally.
+1. **Clone the repository**
+```bash
+   git clone https://github.com/your-username/Instasight_Multiagent.git
+   cd Instasight_Multiagent
+```
+   
+
+2. **Create a virtual environment (Python 3.9+)**
+```bash
+    python -m venv venv
+    source venv/bin/activate   # Linux/Mac
+    venv\Scripts\activate      # Windows
+```
+3. **Install dependencies**
+
+```bash
+   pip install -r requirements.txt
+```
+4. **Configure environment variables (create a ```.env``` file)**
+```text
+    GOOGLE_API_KEY=your-google-api-key
+    GOOGLE_PROJECT_ID=your-gcp-project-id
+    GOOGLE_LOCATION=us-central1
+    META_TOKEN=your-meta-access-token   # optional for API ingestion
+    PAGE_ID=your-instagram-page-id
+    GCS_BUCKET=imia-data-exports
+    ENABLE_API_INGESTION=True
+```
+5. Run Streamlit
+```bash
+    streamlit run streamlit_app.py
+```
+---
+
+## Data Ingestion Options
+IMIA supports two ways to get instagram data:
+
+**Option 1: Meta API (Automatic)**
+1. Create a [Facebook Developer App](https://developers.facebook.com/)
+
+2. Enable Instagram Graph API in the app.
+
+3. Connect your Instagram Business Account to your Facebook Page.
+
+4. Generate a Long‑Lived Access Token (valid ~60 days) with these permissions:
+```text
+    instagram_basic
+    instagram_manage_insights
+    instagram_manage_comments
+    pages_show_list
+    pages_read_engagement
+```
+5. Add the token and page ID to your ```.env``` file:
+```text
+    META_TOKEN=EAAG...
+    PAGE_ID=your-page-id
+```
+6. Set ```ENABLE_API_INGESTION= TRUE``` in ```.env```
+7. Run the streamlit app. IMIA will automatically fetch new posts, insights and engagement metrics.
+
+**Option 2: Manual CSV Export (Offline)**
+1. Go to Meta Business Suite → Insights → Export Data.
+
+2. Select your Instagram Page and the desired date range.
+
+3. Download the CSV (Excel or CSV format).
+
+4. Open Streamlit and upload the CSV file.
+
+5. IMIA agents will normalize the CSV, convert post dates to datetime objects, and prepare the data for analysis.
+
+*This option works without a Meta Access Token, but requires manual data export.*
+
+## Agent Instructions
+The agents are configured using markdown instruction files that define their roles and tools. These files are located in configs/agent_instructions/.
+- ```ingestion.md``` – Instructs the ingestion agent to load data from CSV or Meta API using the provided tools.
+- ```normalization.md``` – Guides the normalization agent to apply column mapping and datetime conversion.
+- ```imia_brain.md``` – Directs the analysis agent to compute engagement metrics, posting patterns, content clusters, and forecasts.
+- ```exporter.md``` – Instructs the export agent to generate PowerBI CSV and Tableau Hyper extracts.
+
+Each file contains a clear description of the agent’s purpose and the tools it should use, enabling the LLM to orchestrate the workflow correctly.
+
+## Exports
+After processing, the following files are generated in the exports/ directory:
+
+- ```imia_bi_export.csv``` – PowerBI‑ready CSV with top posts and engagement metrics.
+
+- ```tableau_extract.hyper``` – Placeholder for a Tableau Hyper extract (implementation planned).
+
+Both files include date dimensions, content metrics (likes, comments, shares, saves), engagement rates, and LLM‑predicted performance metrics.
+
+## Architecture Overview
+IMIA leverages:
+
+- LLM‑powered agents for analysis, guided by detailed instructions.
+
+- Sequential and parallel agent execution for efficiency.
+
+- Custom Python tools for CSV normalization, analytics, forecasting, and BI exports.
+
+- Google ADK / Vertex AI for orchestration and deployment.
+
+- Streamlit for a user‑friendly interface.
+
+## CI/CD and Future Work
+**CI/CD intergration**
+
+- Automated Testing: Use GitHub Actions to run unit tests (e.g., pytest for tools) and integration tests on every push.
+
+- Containerization: Build a Docker image for the Streamlit app and push to a container registry.
+
+- Continuous Deployment: Deploy the app to Google Cloud Run or a similar platform on merge to main.
+
+- Scheduled Pipelines: Set up cron jobs (via GitHub Actions or Cloud Scheduler) to run the ingestion pipeline daily when API mode is enabled, refreshing data and exports.
+
+- Data Version Control: Integrate DVC to track dataset changes and model outputs.
+
+- Monitoring: Add logging and alerting (e.g., Sentry) to catch runtime errors.
+
+**Future Enhancements**
+
+- Advanced Forecasting: Replace the simple rolling average with Prophet, ARIMA, or LSTM models.
+
+- Sentiment Analysis: Analyze comment sentiment using LLMs or NLP libraries.
+
+- Content Clustering: Use embeddings to group posts by topic or visual style.
+
+- Multi‑Platform Support: Extend agents to handle TikTok, LinkedIn, and other social media APIs.
+
+- Custom KPIs: Allow users to define their own business metrics.
+
+- Automated Reporting: Generate weekly reports sent via email or Slack.
+
+- Deploy as Managed Agents: Use Vertex AI Agent Engine for scalable, long‑running tasks.
+
+- Feedback Loop: Allow users to validate insights and improve prompt instructions.
 
 
-2. Set Up a Virtual Environment in the local clone of the repository by navigating to the Repo directory on your local device and entering the commands (one at a time)
+## Contact
 
-python3 -m venv venv
-source venv/bin/activate
+- **Author**: August Vollbrecht
+- **GitHub**: [github.com/AugustAllYear](https://github.com/AugustAllYear)
+- **LinkedIn**: [linkedin.com/in/august-vollbrecht](https://www.linkedin.com/in/august-vollbrecht)
+- **Email**: augustvollbrecht@proton.me
 
-
-3. Install Dependencies
-bash
-Copy code
-pip install -r requirements.txt
+For questions, feedback, or collaboration opportunities, feel free to reach out.
 
 
-4. Configure Environment Variables
 
-create .env file by entering the following commands in your terminal:
-note: this may not work if the enviroment is activated then you will need to manually add them to the folder.
 
-touch .env
-Add the following:
 
-Contents the .env Copy code:
-GOOGLE_API_KEY=your-google-adk-api-key
-GOOGLE_PROJECT_ID=your-gcp-project-id
-GOOGLE_LOCATION=us-central1
 
-META_TOKEN=your-meta-access-token       # Optional for API ingestion
-PAGE_ID=your-instagram-page-id
 
-GCS_BUCKET=imia-data-exports
-ENABLE_API_INGESTION=True
-📥 Data Ingestion Options
-IMIA supports two ways to get Instagram data:
 
-5. DATA input options
-Option 1: Meta API (Automatic)
-    1. Create a Facebook Developer App: https://developers.facebook.com
 
-    2. Enable Instagram Graph API in the app.
 
-    3. Connect your Instagram Business Account to your Facebook Page.
 
-    4. Generate a Long-Lived Access Token (valid ~60 days) with these permissions:
 
-nginx
-Copy code
-instagram_basic
-instagram_manage_insights
-instagram_manage_comments
-pages_show_list
-pages_read_engagement
-    5. Add the token and page ID to your .env file:
 
-env
-Copy code
-META_TOKEN=EAAG...
-PAGE_ID=your-page-id
-Enable API ingestion in .env:
 
-env
-Copy code
-ENABLE_API_INGESTION=True
-Run the Streamlit app. IMIA will automatically fetch new posts, insights, and engagement metrics.
 
-Option 2: Manual CSV Export (Offline)
-Go to Meta Business Suite → Insights → Export Data.
 
-Select your Instagram Page and the desired date range.
 
-Download the CSV (Excel or CSV format).
 
-Open Streamlit and upload the CSV file.
 
-IMIA agents will automatically normalize the CSV, convert post dates to datetime objects, and prepare the data for analysis.
 
-✅ This option works without a Meta Access Token, but requires manual data export.
 
-🖥 Run Streamlit UI
-bash
-Copy code
-streamlit run streamlit_app.py
-Access your local dashboard:
 
-arduino
-Copy code
-http://localhost:8501
-Upload a CSV or use API ingestion. The agents will process the data, normalize it, and provide BI-ready exports in exports/.
 
-📊 Exports
-exports/imia_bi_export.csv → PowerBI/Tableau CSV
 
-exports/tableau_extract.hyper → Tableau Hyper Extract
 
-Both include:
-
-Date dimensions
-
-Content metrics (likes, comments, shares, saves)
-
-Engagement rates
-
-LLM-predicted performance metrics
-
-⚙️ Architecture Overview
-IMIA uses:
-
-LLM-powered agents for analysis
-
-Sequential & parallel agent execution
-
-Custom tools for CSV normalization and forecasting
-
-Google ADK / Vertex AI for orchestration and deployment
-
-Streamlit for a user-friendly interface

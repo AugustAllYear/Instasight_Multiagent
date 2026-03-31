@@ -231,6 +231,28 @@ IMIA leverages:
 
 - Feedback Loop: Allow users to validate insights and improve prompt instructions.
 
+**Expanded Use Cases**
+
+The architecture behind Instasight is intentionally platform‑agnostic. The system is built around a flexible data ingestion layer (CSV or any REST API), a normalization pipeline, and an LLM‑powered analytics layer, making it adaptable to a wide range of data sources and domains.
+
+Example applications:
+
+- Multi‑platform social intelligence – Ingest data from TikTok, YouTube, Twitter/X, or LinkedIn via their APIs; normalize engagement metrics and generate unified dashboards.
+
+- Competitor benchmarking – Monitor multiple competitor accounts across platforms to compare growth, engagement, and content strategy.
+
+- Influencer evaluation – Score potential partners based on historical engagement rates, audience growth, and sentiment.
+
+- Customer feedback analysis – Process support tickets, reviews, or survey responses to identify recurring themes and sentiment trends.
+
+- Operational log analysis – Analyze internal system logs to detect anomalies, forecast workloads, or summarize incident patterns.
+
+- E‑commerce review mining – Extract product insights from customer reviews to inform development and marketing decisions.
+
+The system provides a reusable template for automating data collection, normalizing messy inputs, and surfacing actionable insights—whether the data comes from social media, business systems, or customer interactions.
+
+
+
 
 ## Contact
 

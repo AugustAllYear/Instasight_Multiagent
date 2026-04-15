@@ -25,7 +25,7 @@ def posting_patterns(data):
     }
 
 def content_clustering(data):
-    """Summarise engagement by content type."""
+    """Summarize engagement by content type."""
     data = data.copy()
     if "eng_rate" not in data:
         data["eng_rate"] = (data["likes"] + data["comments"] + data["saves"]) / data["reach"].replace(0, 1)

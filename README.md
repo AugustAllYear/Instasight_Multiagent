@@ -199,7 +199,7 @@ IMIA leverages:
 - Streamlit for a user‑friendly interface.
 
 ## CI/CD and Future Work
-**CI/CD intergration**
+**CI/CD integration**
 
 - Automated Testing: Use GitHub Actions to run unit tests (e.g., pytest for tools) and integration tests on every push.
 

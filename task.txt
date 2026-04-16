@@ -1,0 +1,47 @@
+# Instasight – Task List
+
+## 1. Critical Fixes (Must-Do)
+
+- [ ] Fix Google ADK imports – replace `from google.adk import Agent` with correct import path (e.g., `from google.adk.agents import Agent`). Verify ADK API documentation for proper usage.
+- [ ] Reimplement agent data flow: agents currently return ADK response objects, not processed dataframes. Create core functions in each agent module and use them directly in the orchestrator.
+- [ ] Add error handling to all API calls (Meta Graph API, file I/O) with try-except blocks and logging.
+- [ ] Create missing directories dynamically: ensure `exports/` exists before writing CSV/Tableau files.
+- [ ] Validate environment variables (META_TOKEN, PAGE_ID) before using them in `tools/meta_api.py`. Raise clear errors if missing.
+- [ ] Add logging throughout the pipeline: ingestion, normalization, analysis, export. Use a consistent logger.
+
+## 2. Configuration & Environment
+
+- [ ] Populate `configs/config.yaml` with meaningful defaults (paths, API keys env names, forecasting window).
+- [ ] Create a config loader (`configs/config_loader.py`) that reads YAML and merges with environment variables.
+- [ ] Add `pyyaml` to `requirements.txt`.
+- [ ] Use config values in all tools (e.g., export paths, forecasting window) instead of hardcoding.
+
+## 3. Code Quality & Robustness
+
+- [ ] In `tools/analytics.py`, ensure `saves` column exists before using it; if missing, default to 0.
+- [ ] In `tools/forecasting.py`, handle cases where dataframe has fewer than 7 rows (fallback to mean).
+- [ ] In `tools/exporters.py`, create the export directory if it doesn’t exist before writing files.
+- [ ] In `streamlit_app.py`, check that the export file exists before opening it for download; show user-friendly error if missing.
+- [ ] In `tools/meta_api.py`, add timeout and retry logic for HTTP requests.
+
+## 4. Testing & Validation
+
+- [ ] Write unit tests for each tool function (normalization, analytics, forecasting) using sample data.
+- [ ] Write integration test for the full pipeline using a mock CSV file.
+- [ ] Test Streamlit UI manually with both CSV upload and Meta API modes.
+- [ ] Validate that the pipeline handles missing columns gracefully (e.g., no `saves` column).
+
+## 5. Documentation & Deployment
+
+- [ ] Update README with corrected setup steps, environment variables, and usage examples.
+- [ ] Document the agent architecture and data flow in `design.md` or a new `ARCHITECTURE.md`.
+- [ ] Add CI/CD with GitHub Actions: run tests on push, optionally deploy Streamlit app to a cloud platform (e.g., Streamlit Cloud, GCP Run).
+- [ ] Add Dockerfile for containerized deployment (already exists, but verify it works with the fixed code).
+
+## 6. Future Enhancements (Optional)
+
+- [ ] Replace simple forecasting with Prophet or ARIMA.
+- [ ] Add sentiment analysis on post comments using a pre-trained transformer.
+- [ ] Extend agents to support TikTok, LinkedIn, or Twitter APIs.
+- [ ] Implement a feedback loop to improve agent instructions based on user validation.
+- [ ] Add a scheduled retraining pipeline (e.g., weekly) to refresh forecasts.

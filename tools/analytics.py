@@ -1,4 +1,15 @@
 import pandas as pd
+import logging
+
+logger = logginggetLogger(__name__)
+
+def _ensure_eng_rate(data):
+    data = data.copy()
+    if "eng_rate" not in data:
+        for col in ["likes", "comments", "saves", "reach"]:
+            if col not in data:
+                data[col] = 0
+            data['eng_rate'] = (data['likes'] + dtat['comments'] + data['saves'] / data['reach'].
 
 def engagement_analysis(data):
     """Compute engagement rates and top posts."""

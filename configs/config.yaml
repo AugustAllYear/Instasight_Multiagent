@@ -1,0 +1,21 @@
+# Instasight Configuration
+
+api:
+  meta_token_env: META_TOKEN
+  page_id_env: PAGE_ID
+  enable_api_ingestion_env: ENABLE_API_INGESTION
+
+paths:
+  exports: exports/
+  logs: logs/
+
+logging:
+  level: INFO
+  file: logs/instasight.log
+
+forecasting:
+  window_days: 7
+
+export:
+  powerbi_filename: imia_bi_export.csv
+  tableau_filename: tableau_extract.hyper

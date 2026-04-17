@@ -5,7 +5,16 @@ from tools.analytics import (
     content_clustering
 )
 from tools.forecasting import metrics_forecast
+import logging = logging.getLogger(__name__)
 
+def analyze_data(normalized_data):
+    return {
+        "engagement": engagement_analysis(normalized_data),
+        "posting_patterns": posting_patterns(normalized_data),
+        "content_clustering": content_clustering(normalized_data),
+        "forecast": metrics_forecast(normalized_data)
+    }
+    
 IMIA_INSTRUCTION = """
 You are the IMIA analysis agent. Use the provided tools to analyse Instagram data:
 - Compute engagement metrics and top posts.
@@ -22,4 +31,4 @@ imia_agent = Agent(
 )
 
 def run_imia(normalized_data):
-    return imia_agent.run(f"Analyse: {normalized_data}")
+     return analyze_data(normalized_data)

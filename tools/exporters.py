@@ -1,12 +1,31 @@
 import pandas as pd
+import os
+import logging
+from configs.config_loader import load_config
+
+logger = logging.getLogger(__name__)
 
 def generate_powerbi_csv(analysis):
-    """Write top posts to CSV for PowerBI."""
+    config = load_config()
+    export_dir = config['paths']['exports']
+    os.makedirs(export_dir, exist_ok=True)
+    filename = config['export']['powerbi_filename']
+    filepath = os.path.join(export_dir, filename)
     df = pd.DataFrame(analysis.get("top_posts", []))
-    df.to_csv("exports/imia_bi_export.csv", index=False)
-    return {"result": "exports/imia_bi_export.csv"}
+    try:
+        df.to_csv(filepath, index=False)
+        logger.info(f"Exported PowerBI CSV to {filepath}")
+    except Exception as e:
+        logger.error(f"Failed to export CSV: {e}")
+        raise
+    return {"result": filepath}
 
 def generate_tableau_extract(analysis):
-    """Placeholder for Tableau .hyper export."""
-    # Actual implementation would use e.g., tableauhyperapi
-    return {"result": "exports/tableau_extract.hyper"}
+    config = load_config()
+    export_dir = config['paths']['exports']
+    os.makedirs(export_dir, exist_ok=True)
+    filename = config['export']['tableau_filename']
+    filepath = os.path.join(export_dir, filename)
+    # Placeholder: in real implementation, create .hyper file
+    logger.info(f"Tableau extract placeholder at {filepath}")
+    return {"result": filepath}

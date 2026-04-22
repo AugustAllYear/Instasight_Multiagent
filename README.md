@@ -67,7 +67,7 @@ imia-system/
 │
 ├── requirements.txt
 ├── README.md
-└── .env
+└── .env #
 ```
 
 ### Technologies & Roles
